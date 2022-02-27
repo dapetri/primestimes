@@ -4,7 +4,6 @@ const fs = require("fs");
 const sha1 = require(`${basePath}/node_modules/sha1`);
 const { createCanvas, loadImage } = require(`${basePath}/node_modules/canvas`);
 const buildDir = `${basePath}/build`;
-const layersDir = `${basePath}/layers`;
 const {
   format,
   baseUri,
@@ -428,4 +427,17 @@ const startCreating = async () => {
   writeMetaData(JSON.stringify(metadataList, null, 2));
 };
 
-module.exports = { startCreating, buildSetup, getElements };
+module.exports = {
+  startCreating,
+  buildSetup,
+  getElements,
+  createDna,
+  isDnaUnique,
+  constructLayerToDna,
+  loadLayerImg,
+  drawElement,
+  saveImage,
+  addMetadata,
+  saveMetaDataSingleFile,
+  filterDNAOptions,
+};

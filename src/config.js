@@ -42,10 +42,38 @@ const shuffleLayerConfigurations = false;
 const debugLogs = true;
 
 const format = {
-  width: 512,
-  height: 512,
+  width: 350,
+  height: 350,
   smoothing: false,
 };
+
+const formatDigit = {
+  width: 80,
+  height: 100,
+};
+
+const digitPositions = [
+  { x: 290, y: 140 },   // comma position
+  { x: [150], y: [130] },
+  { x: [100, 180], y: [130] },
+  { x: [60, 140, 220], y: [130] },
+  { x: [200, 60, 140, 220], y: [70, 130] },
+  { x: [120, 200, 60, 140, 220], y: [70, 130] },
+  { x: [40, 120, 200, 60, 140, 220], y: [70, 130] },
+];
+
+const fonts = [
+  {
+    name: "graph",
+    weight: 1,
+    layersOrder: [{ name: "filling" }, { name: "block" }, { name: "outline" }],
+  },
+  {
+    name: "pix",
+    weight: 1,
+    layersOrder: [{ name: "filling" }, { name: "block" }],
+  },
+];
 
 const gif = {
   export: false,
@@ -72,7 +100,7 @@ const pixelFormat = {
 };
 
 const background = {
-  generate: true,
+  generate: false,
   brightness: "80%",
   static: false,
   default: "#000000",
@@ -119,4 +147,7 @@ module.exports = {
   solanaMetadata,
   gif,
   preview_gif,
+  fonts,
+  formatDigit,
+  digitPositions,
 };
