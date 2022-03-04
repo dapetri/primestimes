@@ -1,7 +1,7 @@
 {
-  "name": "hashlips_art_engine",
+  "name": "primestime",
   "version": "1.1.1",
-  "description": "HashLips Art Engine is a tool used to create multiple different instances of artworks based on provided layers.",
+  "description": "Making our NFTs",
   "main": "index.js",
   "bin": "index.js",
   "pkg": {
@@ -21,7 +21,7 @@
     "preview_gif": "node utils/preview_gif.js",
     "generate_metadata": "node utils/generate_metadata.js"
   },
-  "author": "Daniel Eugene Botha (HashLips)",
+  "author": "David Petri",
   "license": "MIT",
   "dependencies": {
     "@stdlib/datasets-primes-100k": "0.0.9",
