@@ -4,6 +4,7 @@ const fs = require("fs");
 const sha1 = require(`${basePath}/node_modules/sha1`);
 const { createCanvas, loadImage } = require(`${basePath}/node_modules/canvas`);
 const buildDir = `${basePath}/build`;
+// const layersDir = `${basePath}/layers`;
 const {
   format,
   baseUri,
@@ -199,6 +200,7 @@ const addText = (_sig, x, y, size) => {
 const drawElement = (_renderObject, _index, _layersLen) => {
   ctx.globalAlpha = _renderObject.layer.opacity;
   ctx.globalCompositeOperation = _renderObject.layer.blend;
+  console.log(_renderObject.loadedImage);
   text.only
     ? addText(
         `${_renderObject.layer.name}${text.spacer}${_renderObject.layer.selectedElement.name}`,

@@ -29,7 +29,6 @@ const {
   loadLayerImg,
   isDnaUnique,
   drawElement,
-  saveImage,
   addMetadata,
   saveMetaDataSingleFile,
   filterDNAOptions,
@@ -56,6 +55,20 @@ primesList.map((prime) => {
 const createPrime = (prime) => {
   let amountDigits = digit.toString().length;
 };
+const canvas = createCanvas(format.width, format.height);
+const ctx = canvas.getContext("2d");
+
+const drawPrime = async (prime) => {
+  let amountDigits = prime.toString().length;
+  let _digitPositions = digitPositions[amountDigits];
+  let _commaPosition = amountDigits > 3 ? digitPositions[0] : null;
+  await drawBackground();
+  for (let i = amountDigits - 1; i >= 0; i--) {
+    await drawDigit(prime.toString()[i], _digitPositions.x[i], _digitPositions.y[i]);
+  }
+
+  saveImage(0);
+};
 
 const drawDigit = async (digit, x, y) => {
   let randomFontName = getRandomFontName();
@@ -72,14 +85,14 @@ const drawDigit = async (digit, x, y) => {
 
   await Promise.all(loadedLayers).then((renderObjectArray) => {
     renderObjectArray.forEach((renderObject) => {
-        ctx.drawImage(
-            renderObject.loadedImage,
-            x, 
-            y, 
-            formatDigit.width,
-            formatDigit.height
-        )
-    })
+      ctx.drawImage(
+        renderObject.loadedImage,
+        x,
+        y,
+        formatDigit.width,
+        formatDigit.height
+      );
+    });
   });
   //     results.forEach((layer) => {
   //       loadedElements.push(loadLayerImg(layer));
@@ -100,31 +113,13 @@ const drawDigit = async (digit, x, y) => {
 };
 
 const drawBackground = async () => {
-    const backgroundPath = `${basePath}/layersDigits/background/`
-    let backgroundLayer = [{elements: getElements(backgroundPath)}]
-    let chosenPath = generateLayers(backgroundLayer)[0].layerPath
-    
-    let renderObject = await Promise.resolve(loadLayerImage(chosenPath))
+  const backgroundPath = `${basePath}/layersDigits/background/`;
+  let backgroundLayer = [{ elements: getElements(backgroundPath) }];
+  let chosenPath = generateLayers(backgroundLayer)[0].layerPath;
 
-    ctx.drawImage(
-        renderObject.loadedImage,
-        0,
-        0,
-        format.width,
-        format.height
-    )
-}
+  let renderObject = await Promise.resolve(loadLayerImage(chosenPath));
 
-const canvas = createCanvas(format.width, format.height);
-const ctx = canvas.getContext("2d");
-
-const drawPrime = (prime) => {
-  let amountDigits = prime.toString().length;
-  let _digitPositions = digitPositions[amountDigits];
-  let _commaPosition = amountDigits > 3 ? digitPositions[0] : null;
-  drawBackground()
-  drawDigit(0,0,0)
-//   TODO: continue here
+  ctx.drawImage(renderObject.loadedImage, 0, 0, format.width, format.height);
 };
 
 const generateLayers = (_layers) => {
@@ -158,7 +153,6 @@ const loadLayerImage = async (_path) => {
   }
 };
 
-
 const getRandomFontName = () => {
   let totalWeight = fonts.reduce((prev, curr) => ({
     weight: prev.weight + curr.weight,
@@ -185,6 +179,14 @@ const digitLayersSetup = (layersOrder, layersDir) => {
   return layers;
 };
 
+const buildDir = `${basePath}/build`;
+const saveImage = (_editionCount) => {
+  fs.writeFileSync(
+    `${buildDir}/images/${_editionCount}.png`,
+    canvas.toBuffer("image/png")
+  );
+};
 
 // drawDigit(0);
-drawPrime(0)
+p = "000000"
+drawPrime(p);

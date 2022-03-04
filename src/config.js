@@ -24,7 +24,7 @@ const solanaMetadata = {
 // If you have selected Solana then the collection starts from 0 automatically
 const layerConfigurations = [
   {
-    growEditionSizeTo: 5,
+    growEditionSizeTo: 1,
     layersOrder: [
       { name: "Background" },
       { name: "Eyeball" },
@@ -55,11 +55,11 @@ const formatDigit = {
 const digitPositions = [
   { x: 290, y: 140 },   // comma position
   { x: [150], y: [130] },
-  { x: [100, 180], y: [130] },
-  { x: [60, 140, 220], y: [130] },
-  { x: [200, 60, 140, 220], y: [70, 130] },
-  { x: [120, 200, 60, 140, 220], y: [70, 130] },
-  { x: [40, 120, 200, 60, 140, 220], y: [70, 130] },
+  { x: [100, 180], y: [130, 130] },
+  { x: [60, 140, 220], y: [130, 130, 130] },
+  { x: [200, 60, 140, 220], y: [70, 180, 180, 180] },
+  { x: [120, 200, 60, 140, 220], y: [70, 70, 180, 180, 180] },
+  { x: [40, 120, 200, 60, 140, 220], y: [70, 70, 70, 180, 180, 180] },
 ];
 
 const fonts = [
