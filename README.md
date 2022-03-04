@@ -2,26 +2,6 @@
 
 Create generative art by using the canvas api and node js. Before you use the generation engine, make sure you have node.js(v10.18.0) installed.
 
-## Installation 🛠️
-
-If you are cloning the project then run this first, otherwise you can download the source code on the release page and skip this step.
-
-```sh
-git clone https://github.com/HashLips/hashlips_art_engine.git
-```
-
-Go to the root of your folder and run this command if you have yarn installed.
-
-```sh
-yarn install
-```
-
-Alternatively you can run this command if you have node installed.
-
-```sh
-npm install
-```
-
 ## Usage ℹ️
 
 Create your different layers as folders in the 'layers' directory, and add all the layer assets in these directories. You can name the assets anything as long as it has a rarity weight attached in the file name like so: `example element#70.png`. You can optionally change the delimiter `#` to anything you would like to use in the variable `rarityDelimiter` in the `src/config.js` file.
@@ -188,8 +168,7 @@ The program will output all the images in the `build/images` directory along wit
     { "trait_type": "Shine", "value": "Shapes" },
     { "trait_type": "Bottom lid", "value": "Low" },
     { "trait_type": "Top lid", "value": "Middle" }
-  ],
-  "compiler": "HashLips Art Engine"
+  ]
 }
 ```
 
