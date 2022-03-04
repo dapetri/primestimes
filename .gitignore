@@ -144,3 +144,4 @@ dist
 
 layersDigits/
 layers/
+.env
