@@ -26,7 +26,6 @@ const {
   getElements,
   createDna,
   constructLayerToDna,
-  loadLayerImg,
   isDnaUnique,
   drawElement,
   addMetadata,
@@ -57,6 +56,8 @@ const createPrime = (prime) => {
 };
 const canvas = createCanvas(format.width, format.height);
 const ctx = canvas.getContext("2d");
+const canvas2 = createCanvas(formatDigit.width, formatDigit.height);
+const ctx2 = canvas2.getContext("2d");
 
 const drawPrime = async (prime) => {
   let amountDigits = prime.toString().length;
@@ -64,7 +65,11 @@ const drawPrime = async (prime) => {
   let _commaPosition = amountDigits > 3 ? digitPositions[0] : null;
   await drawBackground();
   for (let i = amountDigits - 1; i >= 0; i--) {
-    await drawDigit(prime.toString()[i], _digitPositions.x[i], _digitPositions.y[i]);
+    await drawDigit(
+      prime.toString()[i],
+      _digitPositions.x[i],
+      _digitPositions.y[i]
+    );
   }
 
   saveImage(0);
@@ -78,38 +83,39 @@ const drawDigit = async (digit, x, y) => {
     .layersOrder;
   const layers = digitLayersSetup(layersOrder, layersDir);
   const chosenLayers = generateLayers(layers);
-  let loadedLayers = [];
+  let loadedElements = [];
   chosenLayers.forEach((layer) => {
-    loadedLayers.push(loadLayerImage(layer.layerPath));
+    const pencilPath = getPencilPath(`${layer.layerPath}`);
+    if (fs.existsSync(pencilPath)) {
+      loadedElements.push(loadLayerImages(pencilPath, layer.layerPath));
+    } else {
+      loadedElements.push(loadLayerImage(layer.layerPath));
+    }
   });
-
-  await Promise.all(loadedLayers).then((renderObjectArray) => {
+  await Promise.all(loadedElements).then((renderObjectArray) => {
     renderObjectArray.forEach((renderObject) => {
-      ctx.drawImage(
+      ctx2.clearRect(0, 0, formatDigit.width, formatDigit.height);
+      if (renderObject.loadedPencil !== null) {
+        ctx2.drawImage(
+          renderObject.loadedPencil,
+          0,
+          0,
+          formatDigit.width,
+          formatDigit.height
+        );
+        ctx2.globalCompositeOperation = "source-in";
+      }
+      ctx2.drawImage(
         renderObject.loadedImage,
-        x,
-        y,
+        0,
+        0,
         formatDigit.width,
         formatDigit.height
       );
+      ctx2.globalCompositeOperation = "source-over";
+      ctx.drawImage(canvas2, x, y, formatDigit.width, formatDigit.height);
     });
   });
-  //     results.forEach((layer) => {
-  //       loadedElements.push(loadLayerImg(layer));
-  //     });
-
-  //     await Promise.all(loadedElements).then((renderObjectArray) => {
-  //         console.log(renderObjectArray);
-  //   ctx.clearRect(0, 0, formatDigit.width, formatDigit.height);
-  //   //  if (background.generate) {
-  //   //     drawBackground();
-  //   //   }
-  //   renderObjectArray.forEach((renderObject, index) => {
-  //     drawElement(renderObject, index, layersOrder.length);
-  //   });
-  //   saveImage(abstractedIndexes[0]);
-  //   addMetadata(newDna, abstractedIndexes[0]);
-  //   saveMetaDataSingleFile(abstractedIndexes[0]);
 };
 
 const drawBackground = async () => {
@@ -146,11 +152,29 @@ const loadLayerImage = async (_path) => {
   try {
     return new Promise(async (resolve) => {
       const image = await loadImage(`${_path}`);
-      resolve({ loadedImage: image });
+      resolve({ loadedPencil: null, loadedImage: image });
     });
   } catch (error) {
     console.error("Error loading image:", error);
   }
+};
+const loadLayerImages = async (_path1, _path2) => {
+  try {
+    return new Promise(async (resolve) => {
+      const pencil = await loadImage(`${_path1}`);
+      const image = await loadImage(`${_path2}`);
+      resolve({ loadedPencil: pencil, loadedImage: image });
+    });
+  } catch (error) {
+    console.error("Error loading image:", error);
+  }
+};
+
+const getPencilPath = (_path) => {
+  let pathComps = _path.split("/");
+  return (
+    basePath + "/layersPencils/" + pathComps.slice(-4, -1).join("/") + ".png"
+  );
 };
 
 const getRandomFontName = () => {
@@ -188,5 +212,5 @@ const saveImage = (_editionCount) => {
 };
 
 // drawDigit(0);
-p = "000000"
+p = "000000";
 drawPrime(p);

@@ -42,37 +42,37 @@ const shuffleLayerConfigurations = false;
 const debugLogs = true;
 
 const format = {
-  width: 350,
-  height: 350,
+  width: 1024,
+  height: 1024,
   smoothing: false,
 };
 
 const formatDigit = {
-  width: 80,
-  height: 100,
+  width: 240,
+  height: 300,
 };
 
 const digitPositions = [
-  { x: 290, y: 140 },   // comma position
-  { x: [150], y: [130] },
-  { x: [100, 180], y: [130, 130] },
-  { x: [60, 140, 220], y: [130, 130, 130] },
-  { x: [200, 60, 140, 220], y: [70, 180, 180, 180] },
-  { x: [120, 200, 60, 140, 220], y: [70, 70, 180, 180, 180] },
-  { x: [40, 120, 200, 60, 140, 220], y: [70, 70, 70, 180, 180, 180] },
+  { x: 860, y: 430 },   // comma position
+  { x: [392], y: [362] },
+  { x: [272, 512], y: [362, 362] },
+  { x: [152, 392, 632], y: [362, 362, 362] },
+  { x: [590, 160, 400, 640], y: [220, 550, 550, 550] },
+  { x: [350, 590, 160, 400, 640], y: [220, 220, 550, 550, 550] },
+  { x: [110, 350, 590, 160, 400, 640], y: [220, 220, 220, 550, 550, 550] },
 ];
 
 const fonts = [
   {
-    name: "graph",
+    name: "la",
     weight: 1,
-    layersOrder: [{ name: "filling" }, { name: "block" }, { name: "outline" }],
+    layersOrder: [{ name: "filling" }, { name: "block" }, { name: "outline" }, { name: "shade" }],
   },
-  {
-    name: "pix",
-    weight: 1,
-    layersOrder: [{ name: "filling" }, { name: "block" }],
-  },
+//   {
+//     name: "tokio",
+//     weight: 1,
+//     layersOrder: [{ name: "filling" }, { name: "block" }],
+//   },
 ];
 
 const gif = {
